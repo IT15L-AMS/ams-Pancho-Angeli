@@ -8,8 +8,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      // Decode token or fetch profile here to populate user state
-      // For now, we'll assume the user is stored in localStorage
       const savedUser = JSON.parse(localStorage.getItem('user'));
       setUser(savedUser);
     }

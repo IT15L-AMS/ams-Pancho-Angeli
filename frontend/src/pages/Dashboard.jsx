@@ -12,7 +12,7 @@ const Dashboard = () => {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-4 bg-white shadow rounded">Dashboard Analytics</div>
         
-        {/* Only Admin sees this button */}
+        {/* Only Admin for this button */}
         {user?.role === 'Admin' && (
           <button className="p-4 bg-red-100 text-red-700 rounded border border-red-200">
             Admin Secret Settings
