@@ -15,7 +15,7 @@ app.use(express.json());
 // 2. Routes
 app.use('/api/auth', authRoutes);
 
-// 3. Centralized Error Handler 
+// 3. Error Handler 
 app.use(errorHandler);
 
 // 4. DB Sync & Server Start
