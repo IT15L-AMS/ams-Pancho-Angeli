@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-// Verify if user is logged in
 const protect = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ message: "Not authorized" });
@@ -14,11 +13,10 @@ const protect = (req, res, next) => {
   }
 };
 
-// Check for specific roles
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: "Permission denied" });
+      return res.status(403).json({ message: "Permission denied: access restricted" });
     }
     next();
   };

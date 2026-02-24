@@ -1,23 +1,31 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { connectDB } = require('./config/database');
+
+const sequelize = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-// Middleware
-app.use(cors()); // Frontend and backend communicates
+// 1. Global Middleware
+app.use(cors());
 app.use(express.json()); 
 
-// Routes
+// 2. Routes
 app.use('/api/auth', authRoutes);
 
-// Connect to DB and Start Server
+// 3. Centralized Error Handler 
+app.use(errorHandler);
+
+// 4. DB Sync & Server Start
 const PORT = process.env.PORT || 5000;
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+sequelize.sync({ alter: true }) 
+  .then(() => {
+    console.log('Database connected & synchronized');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch(err => {
+    console.error('Unable to connect to database:', err);
   });
-});
