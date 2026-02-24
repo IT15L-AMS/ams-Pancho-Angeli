@@ -1,0 +1,4 @@
+*.sh linguist-vendored
+*.bat linguist-vendored
+*.ps1 linguist-vendored
+node_modules/** linguist-vendored

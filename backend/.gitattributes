@@ -1,0 +1,7 @@
+# Ignore all shell, batch, and powershell scripts from stats
+*.sh linguist-documentation=false linguist-vendored=true
+*.bat linguist-documentation=false linguist-vendored=true
+*.ps1 linguist-documentation=false linguist-vendored=true
+
+# If you accidentally committed node_modules, hide them too
+node_modules/** linguist-vendored=true
