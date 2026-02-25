@@ -1,0 +1,32 @@
+{
+	"info": {
+		"name": "AMS Phase 1 API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login - Student",
+			"request": {
+				"method": "POST",
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"a@pancho.com\", \"password\": \"password123\"}",
+					"options": { "raw": { "language": "json" } }
+				},
+				"url": "http://localhost:5000/api/auth/login"
+			}
+		},
+		{
+			"name": "Login - Admin",
+			"request": {
+				"method": "POST",
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"admin@ams.com\", \"password\": \"adminpassword\"}",
+					"options": { "raw": { "language": "json" } }
+				},
+				"url": "http://localhost:5000/api/auth/login"
+			}
+		}
+	]
+}
