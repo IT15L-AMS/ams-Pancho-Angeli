@@ -5,6 +5,7 @@ const authController = require('../controllers/authController');
 const authenticate = require('../middleware/auth');
 const { checkRole } = require('../middleware/roleCheck');
 
+// Validation rules
 const registerValidation = [
     body('full_name')
         .notEmpty().withMessage('Full name is required')
@@ -31,22 +32,58 @@ const loginValidation = [
         .notEmpty().withMessage('Password is required')
 ];
 
+// Public routes
 router.post('/register', registerValidation, authController.register);
 router.post('/login', loginValidation, authController.login);
-router.get('/profile', authenticate, authController.getProfile);
 router.post('/refresh-token', authController.refreshToken);
+
+// Protected routes
+router.get('/profile', authenticate, authController.getProfile);
 router.post('/logout', authenticate, authController.logout);
 
-router.get('/admin-only', authenticate, checkRole('Admin'), (req, res) => {
-    res.json({ success: true, message: 'Welcome Admin!' });
-});
+// Role-based test routes
+router.get('/admin-only', 
+    authenticate, 
+    checkRole('Admin'), 
+    (req, res) => {
+        res.json({ 
+            success: true, 
+            message: 'Welcome Admin! You have access to admin panel.' 
+        });
+    }
+);
 
-router.get('/registrar-only', authenticate, checkRole('Admin', 'Registrar'), (req, res) => {
-    res.json({ success: true, message: 'Welcome Registrar!' });
-});
+router.get('/registrar-only', 
+    authenticate, 
+    checkRole('Admin', 'Registrar'), 
+    (req, res) => {
+        res.json({ 
+            success: true, 
+            message: 'Welcome Registrar! You have access to registrar panel.' 
+        });
+    }
+);
 
-router.get('/instructor-only', authenticate, checkRole('Admin', 'Registrar', 'Instructor'), (req, res) => {
-    res.json({ success: true, message: 'Welcome Instructor!' });
-});
+router.get('/instructor-only', 
+    authenticate, 
+    checkRole('Admin', 'Registrar', 'Instructor'), 
+    (req, res) => {
+        res.json({ 
+            success: true, 
+            message: 'Welcome Instructor! You have access to instructor panel.' 
+        });
+    }
+);
+
+router.get('/student-only', 
+    authenticate, 
+    checkRole('Admin', 'Registrar', 'Instructor', 'Student'), 
+    (req, res) => {
+        res.json({ 
+            success: true, 
+            message: 'Welcome Student! You have access to student portal.' 
+        });
+    }
+);
 
 module.exports = router;

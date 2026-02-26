@@ -64,10 +64,12 @@ const User = sequelize.define('User', {
     }
 });
 
+// Instance method to validate password
 User.prototype.validatePassword = async function(password) {
     return bcrypt.compare(password, this.password_hash);
 };
 
+// Remove password hash when sending user data
 User.prototype.toJSON = function() {
     const values = Object.assign({}, this.get());
     delete values.password_hash;
