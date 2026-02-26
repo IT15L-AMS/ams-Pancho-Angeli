@@ -11,7 +11,7 @@ Date: February 26, 2026
 │ id (PK)        │◄─────────│ id (PK)        │
 │ name (UNIQUE)  │      N   │ full_name      │
 │ description    │     1    │ email (UNIQUE) │
-│ created_at     │          │ password_hash  │
+│ created_at     │          │ password_hash  │  
 │ updated_at     │          │ role_id (FK)   │
 └────────────────┘          │ is_active      │
                             │ last_login     │
