@@ -2,27 +2,46 @@ Phase 1: Authentication & Authorization
 Project: ams-Pancho-Angeli
 Version: 1.0.0
 Date: February 26, 2026
+Author: Angeli Pancho
+
+Table of Contents
+Entity-Relationship Diagram (ERD)
+
+Database Schema
+
+API Endpoints Documentation
+
+Postman Collection
+
+Environment Variables
+
+Testing Results
+
+How It Works
+
+HTTP Status Codes
+
+Security Features
 
 1. Entity-Relationship Diagram (ERD)
-
-┌────────────────┐          ┌────────────────┐
-│     ROLES      │          │     USERS      │
-├────────────────┤          ├────────────────┤
-│ id (PK)        │◄─────────│ id (PK)        │
-│ name (UNIQUE)  │      N   │ full_name      │
-│ description    │     1    │ email (UNIQUE) │
-│ created_at     │          │ password_hash  │  
-│ updated_at     │          │ role_id (FK)   │
-└────────────────┘          │ is_active      │
-                            │ last_login     │
-                            │ created_at     │
-                            │ updated_at     │
-                            └────────────────┘
-
+text
+┌─────────────────┐                    ┌─────────────────┐
+│     ROLES       │                    │     USERS       │
+├─────────────────┤                    ├─────────────────┤
+│  id (PK)        │────┐               │  id (PK)        │
+│  name (UNIQUE)  │    │               │  full_name      │
+│  description    │    └───────────────│  email (UNIQUE) │
+│  created_at     │         N           │  password_hash  │
+│  updated_at     │        1            │  role_id (FK)   │
+└─────────────────┘                    │  is_active      │
+                                       │  last_login     │
+                                       │  created_at     │
+                                       │  updated_at     │
+                                       └─────────────────┘
 Relationship: One Role → Many Users (1:M)
 
 2. Database Schema
-
+sql
 -- =====================================================
 -- Academic Management System - Phase 1 Database Schema
 -- Project: ams-Pancho-Angeli
@@ -118,8 +137,7 @@ INSERT INTO users (full_name, email, password_hash, role_id, is_active) VALUES
 
 ('Angeli Pancho', 'a.pancho@example.com', '$2a$10$XOP55slKQ9KJQqHQUXxRLO6ZQqHQXxRLO6ZQqHQXxRLO6ZQqHQXxR',
  (SELECT id FROM roles WHERE name = 'Student'), true);
-
- 3. API ENDPOINTS DOCUMENTATION
+3. API Endpoints Documentation
 Base URL: http://localhost:3000/api
 
 POST /auth/register
@@ -326,8 +344,7 @@ json
     "environment": "development",
     "database": "ams_db"
 }
-
-4. POSTMAN COLLECTION
+4. Postman Collection
 Collection: Academic Management System
 Folder: Health Check
 Request	Method	URL	Headers
@@ -538,15 +555,13 @@ json
     "success": false,
     "message": "Authentication required. No token provided."
 }
-
-5. ENVIRONMENT VARIABLES
+5. Environment Variables
 AMS Local Environment
 Variable	Initial Value	Current Value
 baseUrl	http://localhost:3000/api	http://localhost:3000/api
 token		eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 refreshToken		eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-
-6. TESTING RESULTS
+6. Testing Results
 ✅ All Tests Passed
 Test	Description	Result
 1	Health Check → 200 OK	✅ Pass
@@ -560,8 +575,7 @@ Test	Description	Result
 9	Logout with valid token → 200 OK	✅ Pass
 10	Admin route with student token → 403 Forbidden	✅ Pass
 11	All 4 roles login successful	✅ Pass
-
-7. HOW IT WORKS
+7. How It Works
 Authentication Flow
 Registration
 
@@ -603,7 +617,7 @@ If role in allowed list: request proceeds
 
 If role not allowed: 403 Forbidden returned
 
-8. HTTP STATUS CODES
+8. HTTP Status Codes
 Code	Meaning	Usage
 200	OK	Successful login, profile, refresh, logout
 201	Created	Successful registration
@@ -611,25 +625,15 @@ Code	Meaning	Usage
 401	Unauthorized	Missing/invalid token, invalid credentials
 403	Forbidden	Insufficient role permissions
 500	Internal Server Error	Server/database errors
-
-9. SECURITY FEATURES
-
-✅ Passwords hashed with bcryptjs (10 rounds)
-
-✅ JWT tokens with 24-hour expiration
-
-✅ Refresh tokens with 7-day expiration
-
-✅ Email unique constraint in database
-
-✅ Input validation on all endpoints
-
-✅ No passwords returned in responses
-
-✅ Token verification middleware
-
-✅ Role-based access control
-
-✅ Proper error messages (no sensitive info)
-
-✅ CORS configured for security
+9. Security Features
+Feature	Implementation
+✅ Password Hashing	bcryptjs with 10 salt rounds
+✅ JWT Tokens	24-hour expiration
+✅ Refresh Tokens	7-day expiration (Bonus)
+✅ Email Uniqueness	Database UNIQUE constraint
+✅ Input Validation	express-validator on all endpoints
+✅ No Password in Response	password_hash field excluded
+✅ Token Verification	Middleware on protected routes
+✅ Role-Based Access	RBAC middleware with role checks
+✅ Error Messages	No sensitive info leaked
+✅ CORS	Properly configured
